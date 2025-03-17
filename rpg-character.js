@@ -5,7 +5,6 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-import '@haxtheweb/rpg-character/rpg-character.js';
 
 /**
  * `rpg-character`
@@ -22,6 +21,11 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.title = "";
+    this.login = "milestudor";
+    this.avatar = "https://github.com/${milestudor}.png";
+    this.getElementById("rpg-character").setAttribute("login", this.login);
+    this.getElementById("rpg-character").setAttribute("avatar", this.avatar);
+    this.p = this.login;
     this.t = this.t || {};
     this.t = {
       ...this.t,
