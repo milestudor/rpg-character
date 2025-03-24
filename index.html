@@ -34,11 +34,15 @@
 
 <body>
   <div id="demo">
-    <h1>rpg-character</h1>
+    <h1>github-rpg-contributors</h1>
     <github-rpg-contributors organization="haxtheweb" repo="webcomponents" limit="10"></github-rpg-contributors>
-    <github-rpg-contributors organization="HannahMontana-ALE" repo="HannahMontana-ALE"></github-rpg-contributors>
+    <github-rpg-contributors organization="haxtheweb" repo="haxlab" limit="10"></github-rpg-contributors>
+    <div class="contributions">
+        <rpg-character seed="${item.login}" contributions="{item.contributions}"></rpg-character>
+    </div>
     <!-- this is going to do whatever the tag's defaults are -->
   <script type="module" src="https://rpg-character.js"></script>
+  </div>
 
   <!-- Take HAX, the Web and you further down the rabbit hole -->
   <style>

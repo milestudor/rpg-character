@@ -21,11 +21,11 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    this.org = '';
-    this.repo = '';
+    this.org = 'haxtheweb';
+    this.repo = 'webcomponents';
     this.title = '';
     this.items = [];
-    this.limit = 15;
+    this.limit = 10;
     this.t = this.t || {};
     this.t = {
       ...this.t,
@@ -63,8 +63,9 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
         font-family: var(--ddd-font-navigation);
       }
       .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
       }
       h3 span {
         font-size: var(--rpg-character-label-font-size, var(--ddd-font-size-s));
@@ -72,20 +73,20 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       .rpg-wrapper {
         display: flex;
         align-items: center;
-        margin: var(--ddd-spacing-2);
+        text-align: center;
       }
     `];
   }
 
   updated(changedProperties) {
     super.updated(changedProperties);
-    if (changedProperties.has('org') || changedProperties.has('repo')) {
+    if (changedProperties.has('org') || changedProperties.has('repo') || changedProperties.has('limit')) {
       this.getData();
     }
   }
 
   getData() {
-    const url = `https://api.github.com/repos/${this.org}/${this.repo}/contributors`;
+    const url = fetch(`https://api.github.com/repos/${this.org}/${this.repo}/contributors`);
     try {
       fetch(url).then(d => d.ok ? data.json(): {}).then(data => {
         if (data) {
@@ -100,21 +101,20 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
+    <h2>
+      Contributors for
+      <a href="https://github.com/${this.org}/${this.repo}" target="_blank">${this.org}/${this.repo}</a>
+    </h2>
     <div class="wrapper">
-      <h3>GitHub Repo: <a href="https://github.com/${this.org}/${this.repo}">${this.org}/${this.repo}</a></h3>
-    </div>;
-    <slot></slot>
-    ${this.items.filter((item, index) => index < this.limit).map((item) => 
-      html`
-      <div class="rpg-wrapper">
-      <rpg-character  seed="${item.login}"></rpg-character>
-        <div class="contributions">
-        <a href=https://github.com/${item.login}>${item.login}</a>
-        Contributions: ${item.contributions}
-        </div>
-      </div>
-     `)}
-  </div>`;
+      ${this.items.map(contributor => html`
+        <div class="rpg-wrapper">
+          <a href="{item.html_url}" target="_blank">
+            <rpg-character seed="${item.login}"></rpg-character>
+          </a>
+        </div>;
+      `)}
+    </div>
+  `;
   }
 
   /**
