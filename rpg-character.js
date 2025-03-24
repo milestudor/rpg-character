@@ -65,7 +65,6 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
       .wrapper {
         display: flex;
         flex-wrap: wrap;
-        gap: 16px;
       }
       h3 span {
         font-size: var(--rpg-character-label-font-size, var(--ddd-font-size-s));
@@ -102,11 +101,11 @@ export class RpgCharacter extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
     <h2>
-      Contributors for
+      Contributons: 
       <a href="https://github.com/${this.org}/${this.repo}" target="_blank">${this.org}/${this.repo}</a>
     </h2>
     <div class="wrapper">
-      ${this.items.map(contributor => html`
+      ${this.items.map(item => html`
         <div class="rpg-wrapper">
           <a href="{item.html_url}" target="_blank">
             <rpg-character seed="${item.login}"></rpg-character>
